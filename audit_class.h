@@ -1,3 +1,13 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * audit_class.h: File Monitoring and Auditing System audit class header file.
+ *
+ * Written by Soumendu Sekhar Satapathy, 23rd Feb 2020
+ * satapathy.soumendu@gmail.com
+ * 
+ *
+ */
+
 #include "system_headers.h"
 
 class audit_class

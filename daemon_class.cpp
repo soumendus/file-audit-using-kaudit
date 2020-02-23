@@ -1,3 +1,14 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * daemon_class.cpp: File Monitoring and Auditing System Daemoin class to
+ * create a daemon.
+ *
+ * Written by Soumendu Sekhar Satapathy, 23rd Feb 2020
+ * satapathy.soumendu@gmail.com
+ * 
+ *
+ */
+
 #include "daemon_class.h"
 
 

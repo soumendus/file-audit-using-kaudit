@@ -1,3 +1,13 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * logger_class.cpp: File Monitoring and Auditing System Logger class
+ *
+ * Written by Soumendu Sekhar Satapathy, 23rd Feb 2020
+ * satapathy.soumendu@gmail.com
+ * 
+ *
+ */
+
 #include "logger_class.h"
 
 logger_class::logger_class(string& path) 
