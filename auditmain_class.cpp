@@ -61,7 +61,7 @@ void audit_handler(struct ev_loop *loop, struct ev_io *io, int revents)
                  reply.message, 
 		 asctime(localtime(&timetoday)));
 
-        printf("EVENT: %s\n", buf);
+        cout<<"EVENT:"<<" "<< buf << endl;
     	fout << buf;
 
     }
