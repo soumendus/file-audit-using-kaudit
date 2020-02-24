@@ -76,6 +76,12 @@ Create file monitoring software that will log file access to configured director
    
    $ auditdir
    
+   # HOW TO SEE LOGGED DATA
+   
+   $ tail -f /var/log/syslog in ubuntu
+   
+   $ tail -f /var/log/messages in REDHAT or CentOS
+   
    # TBD
    
    - More Testing by writing a Test Driver
