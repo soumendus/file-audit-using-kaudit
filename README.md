@@ -22,6 +22,10 @@ Create file monitoring software that will log file access to configured director
   and invokes the handler to log to the syslog :- /var/log/syslog. Kernel <--> Userspace communication happens via NETLINK. 
   We can view the LOG by doing a "vi" to the /var/log/syslog or via using the command tail -f /var/log/syslog. FMAS Logs a information like Timestamp, Date, User, Process ID, Access type (Creation, deletion etc) . It also shows the name of the process which the user was executing and also the current working directory from where the command was invoked to access the directory or the regular file.
   
+  PPT With the Main Idea and Design
+  https://github.com/soumendus/file-audit-using-kaudit/blob/master/FAMS_Design%20.pptx
+  
+  
   2) I have also developed this using a naive approach where my software recursively keeps checking the directory for access to files. The frequency of scanning the directory can be configured. This method even though works cannot be considered as a great method.
   
   3) Using Linux inotify - monitoring filesystem events we can write a application which can collect events from the Linux Kernel and Log to the file. This nethod is analogous to the first method i.e using the Linux kaudit daemon.
