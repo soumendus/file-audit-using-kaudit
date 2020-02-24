@@ -67,6 +67,8 @@ Create file monitoring software that will log file access to configured director
    Example: The following shows three directories added
    
    /root/coding
+   
    /home/scala
+   
    /etc
    
