@@ -23,14 +23,21 @@ Create file monitoring software that will log file access to configured director
   We can view the LOG by doing a "vi" to the /var/log/syslog or via using the command tail -f /var/log/syslog. FMAS Logs a information like Timestamp, Date, User, Process ID, Access type (Creation, deletion etc) . It also shows the name of the process which the user was executing and also the current working directory from where the command was invoked to access the directory or the regular file.
   
   PPT With the Main Idea and Design
+  
   https://github.com/soumendus/file-audit-using-kaudit/blob/master/FAMS_Design%20.pptx
   
   Associated Code
+  
   Main Class
+  
   https://github.com/soumendus/file-audit-using-kaudit/blob/master/auditmain_class.cpp
+  
   Event Class
+  
   https://github.com/soumendus/file-audit-using-kaudit/blob/master/event_class.cpp
+  
   Daemon Class
+  
   https://github.com/soumendus/file-audit-using-kaudit/blob/master/daemon_class.cpp
   
   
