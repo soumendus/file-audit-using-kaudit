@@ -109,6 +109,8 @@ Create file monitoring software that will log file access to configured director
    
    - To convert numerical User ID to human readable format.
    
+   - To do a bit of parsing for reading data from /etc/auditdir.conf file.
+   
    - More Testing and validation by writing a Test Driver
    
    - More comprehensive Exception Handling
