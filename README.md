@@ -72,3 +72,7 @@ Create file monitoring software that will log file access to configured director
    
    /etc
    
+   # HOW TO RUN THE FMAS DAEMON
+   
+   $ auditdir
+   
