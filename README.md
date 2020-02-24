@@ -34,6 +34,8 @@ Create file monitoring software that will log file access to configured director
   
   Event Class
   
+  https://github.com/soumendus/file-audit-using-kaudit/blob/master/event_class.h
+  
   https://github.com/soumendus/file-audit-using-kaudit/blob/master/event_class.cpp
   
   Daemon Class
