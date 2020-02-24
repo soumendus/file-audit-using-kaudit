@@ -110,7 +110,7 @@ int main()
 		dobj.print_message(msg);
 	}
 	catch(std::exception& e) {
-		std::cout << e.what() << std::endl;
+		syslog (LOG_ERR, "%s", e.what());
 		return EXIT_FAILURE;
     	}
 
@@ -128,10 +128,9 @@ int main()
 
 	// Add the Directory for Monitoring
 	for(int i = 0; i < dirs.size(); i++) {
-		cout<<"Adding directory"<<" "<< dirs[i] <<" "<<"for monitoring"<<endl;
 		rule[i] = new audit_rule_data();
 		if(audit_add_watch_dir(AUDIT_DIR, &rule[i], dirs[i].c_str()) < 0) {
-			cout<<"Unable to add directory"<<" "<< dirs[i] <<" " <<"for monitoring"<<endl;
+			syslog (LOG_ERR, "%s", dirs[i].c_str());
 		}
 
 		// Add the desired rule
@@ -157,7 +156,7 @@ int main()
 		ev_obj.event_loop();
 	}
 	catch(std::exception& e) {
-		std::cout << e.what() << std::endl;
+		syslog (LOG_ERR, "%s", e.what());
 		return EXIT_FAILURE;
     	}
 
