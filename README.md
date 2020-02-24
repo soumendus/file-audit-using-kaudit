@@ -25,6 +25,10 @@ Create file monitoring software that will log file access to configured director
   PPT With the Main Idea and Design
   https://github.com/soumendus/file-audit-using-kaudit/blob/master/FAMS_Design%20.pptx
   
+  Associated Code
+  https://github.com/soumendus/file-audit-using-kaudit/blob/master/auditmain_class.cpp
+  
+  
   
   2) I have also developed this using a naive approach where my software recursively keeps checking the directory for access to files. The frequency of scanning the directory can be configured. This method even though works cannot be considered as a great method.
   
