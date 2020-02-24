@@ -84,7 +84,7 @@ Create file monitoring software that will log file access to configured director
    
    # TBD
    
-   - More Testing by writing a Test Driver
+   - More Testing and validation by writing a Test Driver
    
    - More comprehensive Exception Handling
    
@@ -95,3 +95,9 @@ Create file monitoring software that will log file access to configured director
    - Encapsulate the NETLINK routines into a class netlink_class.
    
    - Encapsulate the syslog routines into logger_class.
+   
+   - Currently leveraging syslog daemon for logging, in future will include user's own configured text file.
+   
+   - Provision for User being able to configure more rules.
+   
+  
