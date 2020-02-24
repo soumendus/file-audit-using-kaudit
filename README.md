@@ -76,3 +76,16 @@ Create file monitoring software that will log file access to configured director
    
    $ auditdir
    
+   # TODO
+   
+   - More Testing by writing a Test Driver
+   
+   - More comprehensive Exception Handling
+   
+   - Bit of code re-factoring
+   
+   - Add a bit more Documentation in the code.
+   
+   - Encapsulate the NETLINK routines into a class netlink_class.
+   
+   - Encapsulate the syslog routines into logger_class.
