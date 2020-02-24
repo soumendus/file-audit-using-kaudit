@@ -87,6 +87,20 @@ Create file monitoring software that will log file access to configured director
    
    $ tail -f /var/log/messages in REDHAT or CentOS
    
+   
+   # HOW TO ANALYZE LOGGED DATA
+   
+    FMAS::Type=SYSCALL Message=audit(1582555204.917:21875): arch=c000003e syscall=263 success=yes exit=0 a0=ffffff9c a1=55bdba8cd490 a2=0 a3=55bdba8cc010 items=2 ppid=2076 pid=8688 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=pts0 ses=3 comm="rm" exe="/bin/rm" key=(null) Date=Mon Feb 24 09:40:04 2020
+    
+    FMAS::Type=CWD Message=audit(1582555204.917:21875): cwd="/tmp" Date=Mon Feb 24 09:40:04 2020
+    
+    FMAS::Type=PATH Message=audit(1582555204.917:21875): item=0 name="/tmp" inode=15466497 dev=08:02 mode=041777 ouid=0 ogid=0 rdev=00:00 nametype=PARENT cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0 Date=Mon Feb 24 09:40:04 2020
+    
+    FMAS::Type=PATH Message=audit(1582555204.917:21875): item=1 name="FMAS.txt" inode=15466516 dev=08:02 mode=0100644 ouid=0 ogid=0 rdev=00:00 nametype=DELETE cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0 Date=Mon Feb 24 09:40:04 2020
+
+    In the above output I am trying to DELETE a file called FAMS.txt inside the /tmp directory.
+
+
    # TBD
    
    - More Testing and validation by writing a Test Driver
