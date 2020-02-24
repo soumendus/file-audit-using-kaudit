@@ -53,3 +53,7 @@ Create file monitoring software that will log file access to configured director
   4) We can write a comprehensive script leveraging auditd daemon and adding rules.
   
   5)  I think we can write our own custom kaudit like daemon in the Linux Kernel and add a user space component like FMAS to leverage the custom daemon. Basically we don't want to be at the mercy of the existing kaudit kernel component and we can write out owncustom lightweight daemon.
+  
+  # HOW TO INSTALL THE FMAS SOFTWARE
+  $ rpm -ivh FAMS-1-1.x86_64.rpm --nodeps 
+ 
