@@ -31,6 +31,8 @@ void get_dir(ifstream& f, vector<string>& dirs)
 {
 	string next;
 
+	//TODO: Invoke Parser class for Parsing and validation
+
 	while(getline(f,next)){
 		dirs.push_back(next);
 	}
@@ -60,6 +62,8 @@ void audit_handler(struct ev_loop *loop, struct ev_io *io, int revents)
                  reply.message, 
 		 asctime(localtime(&timetoday)));
 
+	//TODO: Invoke Parser class for Parsing the Message string
+	//TODO: Invoke Logger class for loggin into a file.
 	syslog (LOG_NOTICE, "%s", buf);
 
     }
@@ -89,25 +93,38 @@ int main()
 		return -1;
 	}
 
+	//TODO: Invoke Parser class for Parsing the Message string
 	get_dir(fin, dirs);
 
+#if 0
 	audit_class aobj(dirs);
 
 	aobj.collect_files();
         all_files = aobj.get_all_files_in_all_dir();
+#endif
 
-	// Create an object of the Daemon class.
-	daemon_class dobj;
+	try {
+		// Create an object of the Daemon class.
+		daemon_class dobj;
 
-	// Create Daemon
-	dobj.create_daemon();
+		// Create Daemon
+		dobj.create_daemon();
 
-	string msg("File Auding and Monitoring Daemon Started.");
+		string msg("File Auding and Monitoring Daemon Started.");
 
-	// Print Message
-	dobj.print_message(msg);
+		// Print Message
+		dobj.print_message(msg);
+	}
+	catch(std::exception& e) {
+		std::cout << e.what() << std::endl;
+		return EXIT_FAILURE;
+    	}
 
 	fd = audit_open();
+
+	if(fd < 0){
+		return EXIT_FAILURE;
+	}
 
 	// Enable the Auditing
 	audit_set_enabled(fd, 1);
@@ -130,17 +147,24 @@ int main()
 
     	audit_set_pid(fd, getpid(), WAIT_YES);
 
-	// Create an object of the Event class
-	event_class ev_obj(fd,f_ah);
+	try {
 
-	// Initialize event
-	ev_obj.event_init();
+		// Create an object of the Event class
+		event_class ev_obj(fd,f_ah);
 
-	// Start Event
-	ev_obj.event_start();
+		// Initialize event
+		ev_obj.event_init();
 
-	// Wait for Events
-	ev_obj.event_loop();
+		// Start Event
+		ev_obj.event_start();
+
+		// Wait for Events
+		ev_obj.event_loop();
+	}
+	catch(std::exception& e) {
+		std::cout << e.what() << std::endl;
+		return EXIT_FAILURE;
+    	}
 
 	// Remove all the rules.
 	for(int i = 0; i < dirs.size(); i++) {
@@ -154,9 +178,11 @@ int main()
 	// Close the Auditing system
 	audit_close(fd);
 
+#if 0
 	string mterm("File Auditing and Monitoring Daemon Terminated");
 
 	dobj.print_message(mterm);
+#endif
 
 	closelog();
 
