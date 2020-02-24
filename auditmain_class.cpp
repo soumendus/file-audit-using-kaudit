@@ -147,6 +147,10 @@ int main()
 		audit_delete_rule_data(fd, rule[i], AUDIT_FILTER_EXIT, AUDIT_ALWAYS);
 	}
 
+	for(int i = 0; i < dirs.size(); i++) {
+		delete rule[i];
+	}
+
 	// Close the Auditing system
 	audit_close(fd);
 
