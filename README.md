@@ -67,7 +67,8 @@ Create file monitoring software that will log file access to configured director
   
    # HOW TO CONFIGURE THE FMAS SOFTWARE
    
-   Add all your Directories that you want to monitor in the file /etc/auditdir.conf 
+   Add all your Directories that you want to monitor in the file /etc/auditdir.conf. No trailing space or empty lines in between.
+   My parser development is TBD which will take care of this trailing and leading spaces and empty lines in between the paths.
    
    Example: The following shows three directories added
    
