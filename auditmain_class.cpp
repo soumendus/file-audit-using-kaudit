@@ -83,26 +83,20 @@ int main()
 
 	if(!fin){
 		cout<<"Unable to read the auditdir.conf file"<<endl;
-		return -1;
+		return EXIT_FAILURE;
 	}
 
     	fout.open("/var/log/auditdir.log", ios::out | ios::app);
 
      	if(!fout) {
 		cout<<"Unable to open file for logging file audit data"<<endl;
-		return -1;
+		return EXIT_FAILURE;
 	}
 
 	//TODO: Invoke Parser class for Parsing the Message string
 	get_dir(fin, dirs);
 
-#if 0
-	audit_class aobj(dirs);
-
-	aobj.collect_files();
-        all_files = aobj.get_all_files_in_all_dir();
-#endif
-
+	//TODO: Comprehensive Exception Handling
 	try {
 		// Create an object of the Daemon class.
 		daemon_class dobj;
@@ -147,6 +141,7 @@ int main()
 
     	audit_set_pid(fd, getpid(), WAIT_YES);
 
+	//TODO: Comprehensive Exception Handling
 	try {
 
 		// Create an object of the Event class
