@@ -29,7 +29,7 @@ Create file monitoring software that will log file access to configured director
   
     PPT With the Main Idea and Design
   
-    https://github.com/soumendus/file-audit-using-kaudit/blob/master/FAMS_Design%20.pptx
+    https://github.com/soumendus/file-audit-using-kaudit/blob/master/FMAS_Design.jpg
   
     Associated Code
   
