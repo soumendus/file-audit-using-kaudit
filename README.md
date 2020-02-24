@@ -40,6 +40,8 @@ Create file monitoring software that will log file access to configured director
   
   Daemon Class
   
+  https://github.com/soumendus/file-audit-using-kaudit/blob/master/daemon_class.h
+  
   https://github.com/soumendus/file-audit-using-kaudit/blob/master/daemon_class.cpp
   
   
