@@ -76,13 +76,14 @@ void audit_handler(struct ev_loop *loop, struct ev_io *io, int revents)
                  reply.message, 
 		 asctime(localtime(&timetoday)));
 
-	cout<<buf<<endl;
 	string mstr = convert_to_string_obj(buf,strlen(buf));
-	
+	fout << mstr;
 
 	//TODO: Invoke Parser class for Parsing the Message string
 	//TODO: Invoke Logger class for loggin into a file.
+#if 0
 	syslog (LOG_NOTICE, "%s", buf);
+#endif
 
     }
 }
