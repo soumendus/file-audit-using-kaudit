@@ -112,7 +112,7 @@ int main()
 	//TODO: Invoke Parser class for Parsing the Message string
 	get_dir(fin, dirs);
 
-#if 0
+
 	//TODO: Comprehensive Exception Handling
 	try {
 		// Create an object of the Daemon class.
@@ -130,7 +130,7 @@ int main()
 		syslog (LOG_ERR, "%s", e.what());
 		return EXIT_FAILURE;
     	}
-#endif
+
 
 	fd = audit_open();
 
