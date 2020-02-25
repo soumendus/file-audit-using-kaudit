@@ -89,7 +89,22 @@ Create file monitoring software that will log file access to configured director
    
    # HOW TO RUN THE FMAS DAEMON
    
-   $ auditdir
+    $ auditdir
+   
+    We can also register our daemon with the systemd and use the systemctl to start and stop and check the status.
+   
+    Contents of /etc/systemd/system/fmas.service
+    [Unit]
+    Description=FMAS: File Monitoring and Auditing System
+    After=<>
+
+    [Service]
+    Type=simple
+    Restart=always
+    ExecStart=/usr/bin/auditdir
+
+    [Install]
+    WantedBy=multi-user.target
    
    # HOW TO SEE LOGGED DATA
    
