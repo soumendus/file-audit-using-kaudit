@@ -119,7 +119,7 @@ Create file monitoring software that will log file access to configured director
 
     In the above output I am trying to DELETE a file called FAMS.txt inside the /tmp directory.
     
-    TBD: The above logged output will be Parsed and changed to a more beautified output as Follows. Its easy to implement.
+    TBD: Convert the above output and log as below, so that a non-unix user can understand. 
     
     Name of the Directory Accessed: - /etc
     Name of the file Accessed in the Directory: /etc/passwd
