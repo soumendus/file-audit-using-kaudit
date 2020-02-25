@@ -78,6 +78,15 @@ Create file monitoring software that will log file access to configured director
    
    /etc
    
+    TBD: Planning to change the CONF file(/etc/auditdir.conf) as follows so that the user can specify the Directories and also the LOG file in the same CONF file and this
+     will be backed up by a written parser which will properly parse this file before extracting the directories and the LOG file.
+   
+    TBD: Contents of the /etc/auditdir.conf file
+    AUDITDIR_DIRS=/etc /root/coding /tmp
+
+    AUDITDIR_LOGFILE=/var/log/mylog.txt
+
+   
    # HOW TO RUN THE FMAS DAEMON
    
    $ auditdir
@@ -89,6 +98,7 @@ Create file monitoring software that will log file access to configured director
    $ cat /var/log/auditdir.log
    
    Logging is also done via syslog.
+   
    $ tail -f /var/log/syslog in ubuntu
    
    $ tail -f /var/log/messages in REDHAT or CentOS
@@ -108,6 +118,20 @@ Create file monitoring software that will log file access to configured director
     ouid=0 ogid=0 rdev=00:00 nametype=DELETE cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0 Date=Mon Feb 24 09:40:04 2020
 
     In the above output I am trying to DELETE a file called FAMS.txt inside the /tmp directory.
+    
+    TBD: Format the above output and log as below, for a non-unix user. A BASH script can be written to do that
+    or a few lines of C++ code can be added to the FMAS application to format the above output as follows.
+    
+    Name of the Directory Accessed: - /etc
+    Name of the file Accessed in the Directory: /etc/passwd
+    Type of Access: READ
+    Date of Access: Tue Feb 23 09:26:21 EST 2020
+    Process ID of the Process which Accessed the file: 12345
+    Process Name of the process which accessed the file: /bin/cat
+    User ID who accessed the file: 1001
+    User name who accessed the file: soumendu
+    
+    
 
 
    # TBD
