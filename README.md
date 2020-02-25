@@ -81,7 +81,7 @@ Create file monitoring software that will log file access to configured director
     TBD: Planning to change the CONF file(/etc/auditdir.conf) as follows so that the user can specify the Directories and also the LOG file in the same CONF file and this
      will be backed up by a written parser which will properly parse this file before extracting the directories and the LOG file.
    
-    Contents of the /etc/auditdir.conf file
+    TBD: Contents of the /etc/auditdir.conf file
     AUDITDIR_DIRS=/etc /root/coding /tmp
 
     AUDITDIR_LOGFILE=/var/log/mylog.txt
