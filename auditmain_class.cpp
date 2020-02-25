@@ -55,14 +55,10 @@ void audit_handler(struct ev_loop *loop, struct ev_io *io, int revents)
     struct audit_reply reply;
 
     time_t timetoday;
+    string print_str;
 
-    cout<<"monitoring directories"<<endl;
     audit_get_reply(fd, &reply, GET_REPLY_NONBLOCKING, 0);
 
-#if 0
-    if (reply.type != AUDIT_EOE &&
-        reply.type != AUDIT_PROCTITLE)
-#endif
     if (reply.type == AUDIT_SYSCALL ||
         reply.type == AUDIT_PATH || reply.type == AUDIT_CWD)
     {
@@ -76,8 +72,9 @@ void audit_handler(struct ev_loop *loop, struct ev_io *io, int revents)
                  reply.len,
                  reply.message, 
 		 asctime(localtime(&timetoday)));
-
+	
 	string mstr = convert_to_string_obj(buf,strlen(buf));
+
 	fout << mstr;
 
 	//TODO: Invoke Parser class for Parsing the Message string
@@ -115,6 +112,7 @@ int main()
 	//TODO: Invoke Parser class for Parsing the Message string
 	get_dir(fin, dirs);
 
+#if 0
 	//TODO: Comprehensive Exception Handling
 	try {
 		// Create an object of the Daemon class.
@@ -132,6 +130,7 @@ int main()
 		syslog (LOG_ERR, "%s", e.what());
 		return EXIT_FAILURE;
     	}
+#endif
 
 	fd = audit_open();
 
