@@ -38,6 +38,16 @@ void get_dir(ifstream& f, vector<string>& dirs)
 	}
 }
 
+string convert_to_string_obj(char* a, int size)
+{
+    int i;
+    string s = "";
+    for (i = 0; i < size; i++) {
+        s = s + a[i];
+    }
+    return s;
+}
+
 // This is the audit handler which handles events sent from Kernel
 void audit_handler(struct ev_loop *loop, struct ev_io *io, int revents)
 {
@@ -48,19 +58,27 @@ void audit_handler(struct ev_loop *loop, struct ev_io *io, int revents)
     cout<<"monitoring directories"<<endl;
     audit_get_reply(fd, &reply, GET_REPLY_NONBLOCKING, 0);
 
+#if 0
     if (reply.type != AUDIT_EOE &&
         reply.type != AUDIT_PROCTITLE)
+#endif
+    if (reply.type == AUDIT_SYSCALL ||
+        reply.type == AUDIT_PATH || reply.type == AUDIT_CWD)
     {
         char *buf = new char[MAX_AUDIT_MESSAGE_LENGTH];
         time(&timetoday);
 
         snprintf(buf,
                  MAX_AUDIT_MESSAGE_LENGTH,
-                 "Type=%s Message=%.*s Date=%s",
+                 "FMAS::Type=%s Message=%.*s Date=%s",
                  audit_msg_type_to_name(reply.type),
                  reply.len,
                  reply.message, 
 		 asctime(localtime(&timetoday)));
+
+	cout<<buf<<endl;
+	string mstr = convert_to_string_obj(buf,strlen(buf));
+	
 
 	//TODO: Invoke Parser class for Parsing the Message string
 	//TODO: Invoke Logger class for loggin into a file.
@@ -96,6 +114,7 @@ int main()
 	//TODO: Invoke Parser class for Parsing the Message string
 	get_dir(fin, dirs);
 
+#if 0
 	//TODO: Comprehensive Exception Handling
 	try {
 		// Create an object of the Daemon class.
@@ -113,6 +132,7 @@ int main()
 		syslog (LOG_ERR, "%s", e.what());
 		return EXIT_FAILURE;
     	}
+#endif
 
 	fd = audit_open();
 
