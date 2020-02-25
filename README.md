@@ -23,13 +23,13 @@ Create file monitoring software that will log file access to configured director
   # Solution
   There can be many ways to solve this problem. I developed in two methods. Here I am also sharing more methods to solve this problem.
   
-  1) I have developed this Software (FMAS) using C++ language and this application leverages the Linux Kernel Audit daemon. This FMAS software registers rules with the Linux Kernel for directory monitoring. These directory will be specified by user with full path, in the file /etc/auditdir.conf. Whenever any activity happens within the directory, by some user who logged into the system either remotely or locally, events are sent by the Linux kernel which are caught by the event class of FMAS.
+  1) I have developed this Software (FMAS) using C++ language and this application leverages the Linux Kernel Audit daemon. The FMAS application uses the libaudit library. This FMAS software registers rules with the Linux Kernel for directory monitoring. These directory will be specified by user with full path, in the file /etc/auditdir.conf. Whenever any activity happens within the directory, by some user who logged into the system either remotely or locally, events are sent by the Linux kernel which are caught by the event class of FMAS.
   and invokes the handler to log to the syslog :- /var/log/syslog. Kernel <--> Userspace communication happens via NETLINK. 
   We can view the LOG by doing a "vi" to the /var/log/syslog or via using the command tail -f /var/log/syslog. FMAS Logs a information like Timestamp, Date, User, Process ID, Access type (Creation, deletion etc) . It also shows the name of the process which the user was executing and also the current working directory from where the command was invoked to access the directory or the regular file.
   
     PPT With the Main Idea and Design
   
-    https://github.com/soumendus/file-audit-using-kaudit/blob/master/FAMS_Design%20.pptx
+    https://github.com/soumendus/file-audit-using-kaudit/blob/master/FMAS_Design.jpg
   
     Associated Code
   
@@ -53,11 +53,11 @@ Create file monitoring software that will log file access to configured director
   
   2) I have also developed this using a naive approach where my software recursively keeps checking the directory for access to files. The frequency of scanning the directory can be configured. This method even though works cannot be considered as a great method.
   
-  3) Using Linux inotify - monitoring filesystem events we can write a application which can collect events from the Linux Kernel and Log to the file. This nethod is analogous to the first method i.e using the Linux kaudit daemon.
+  3) Using Linux inotify - monitoring filesystem events we can write a application which can collect events from the Linux Kernel and Log to the file. This nethod is analogous to the first method i.e using the Linux kauditd daemon.
   
   4) We can write a comprehensive script leveraging auditd daemon and adding rules.
   
-  5)  I think we can write our own custom kaudit like daemon in the Linux Kernel and add a user space component like FMAS to leverage the custom daemon. Basically we don't want to be at the mercy of the existing kaudit kernel component and we can write out owncustom lightweight daemon.
+  5)  I think we can write our own custom kauditd like daemon in the Linux Kernel and add a user space component like FMAS to leverage the custom daemon. Basically we don't want to be at the mercy of the existing kaudit kernel component and we can write out own custom lightweight daemon.
   
   # HOW TO INSTALL THE FMAS SOFTWARE
   
@@ -67,7 +67,8 @@ Create file monitoring software that will log file access to configured director
   
    # HOW TO CONFIGURE THE FMAS SOFTWARE
    
-   Add all your Directories that you want to monitor in the file /etc/auditdir.conf 
+   Add all your Directories that you want to monitor in the file /etc/auditdir.conf. No trailing space or empty lines in between.
+   My parser development is TBD which will take care of this trailing and leading spaces and empty lines in between the paths.
    
    Example: The following shows three directories added
    
@@ -87,7 +88,28 @@ Create file monitoring software that will log file access to configured director
    
    $ tail -f /var/log/messages in REDHAT or CentOS
    
+   
+   # HOW TO ANALYZE LOGGED DATA
+   
+    FMAS::Type=SYSCALL Message=audit(1582555204.917:21875): arch=c000003e syscall=263 success=yes exit=0 a0=ffffff9c a1=55bdba8cd490 a2=0 a3=55bdba8cc010 items=2 ppid=2076 pid=8688 auid=1000 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 
+    sgid=0 fsgid=0 tty=pts0 ses=3 comm="rm" exe="/bin/rm" key=(null) Date=Mon Feb 24 09:40:04 2020
+    
+    FMAS::Type=CWD Message=audit(1582555204.917:21875): cwd="/tmp" Date=Mon Feb 24 09:40:04 2020
+    
+    FMAS::Type=PATH Message=audit(1582555204.917:21875): item=0 name="/tmp" inode=15466497 dev=08:02 mode=041777 
+    ouid=0 ogid=0 rdev=00:00 nametype=PARENT cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0 Date=Mon Feb 24 09:40:04 2020
+    
+    FMAS::Type=PATH Message=audit(1582555204.917:21875): item=1 name="FMAS.txt" inode=15466516 dev=08:02 mode=0100644 
+    ouid=0 ogid=0 rdev=00:00 nametype=DELETE cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0 Date=Mon Feb 24 09:40:04 2020
+
+    In the above output I am trying to DELETE a file called FAMS.txt inside the /tmp directory.
+
+
    # TBD
+   
+   - To convert numerical User ID to human readable format.
+   
+   - To do a bit of parsing for reading data from /etc/auditdir.conf file.
    
    - More Testing and validation by writing a Test Driver
    
