@@ -119,7 +119,8 @@ Create file monitoring software that will log file access to configured director
 
     In the above output I am trying to DELETE a file called FAMS.txt inside the /tmp directory.
     
-    TBD: Convert the above output and log as below, for a non-unix user. 
+    TBD: Format the above output and log as below, for a non-unix user. A BASH script can be written to do that
+    or a few lines of C++ code can be added to the FMAS application to format the above output as follows.
     
     Name of the Directory Accessed: - /etc
     Name of the file Accessed in the Directory: /etc/passwd
