@@ -89,6 +89,7 @@ Create file monitoring software that will log file access to configured director
    $ cat /var/log/auditdir.log
    
    Logging is also done via syslog.
+   
    $ tail -f /var/log/syslog in ubuntu
    
    $ tail -f /var/log/messages in REDHAT or CentOS
