@@ -118,6 +118,19 @@ Create file monitoring software that will log file access to configured director
     ouid=0 ogid=0 rdev=00:00 nametype=DELETE cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0 Date=Mon Feb 24 09:40:04 2020
 
     In the above output I am trying to DELETE a file called FAMS.txt inside the /tmp directory.
+    
+    TBD: The above logged output will be Parsed and changed to a more beautified output as Follows. Its easy to implement.
+    
+    Name of the Directory Accessed: - /etc
+    Name of the file Accessed in the Directory: /etc/passwd
+    Type of Access: READ
+    Date of Access: Tue Feb 23 09:26:21 EST 2020
+    Process ID of the Process which Accessed the file: 12345
+    Process Name of the process which accessed the file: /usr/bin/cat
+    User ID who accessed the file: 1001
+    User name who accessed the file: soumendu
+    
+    
 
 
    # TBD
