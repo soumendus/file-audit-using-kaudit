@@ -25,7 +25,7 @@ Create file monitoring software that will log file access to configured director
   
   1) I have developed this Software (FMAS) using C++ language and this application leverages the Linux Kernel Audit daemon. The FMAS application uses the libaudit library. This FMAS software registers rules with the Linux Kernel for directory monitoring. These directory will be specified by user with full path, in the file /etc/auditdir.conf. Whenever any activity happens within the directory, by some user who logged into the system either remotely or locally, events are sent by the Linux kernel which are caught by the event class of FMAS.
   and invokes the handler to log to the syslog :- /var/log/syslog. Kernel <--> Userspace communication happens via NETLINK. 
-  We can view the LOG by doing a "vi" to the /var/log/syslog or via using the command tail -f /var/log/syslog. Logging is also done to a log file /var/log/auditdir.log. FMAS Logs a information like Timestamp, Date, User, Process ID, Access type (Creation, deletion etc) . It also shows the name of the process which the user was executing and also the current working directory from where the command was invoked to access the directory or the regular file.
+  We can view the LOG by doing a "vi" to the /var/log/syslog or via using the command tail -f /var/log/syslog. Logging is also done to a TEXT file /var/log/auditdir.log. FMAS Logs information like Timestamp, Date, User, Process ID, Access type (Creation, deletion etc) . It also shows the name of the process which the user was executing and also the current working directory from where the command was invoked to access the directory or the regular file.
   
     PPT With the Main Idea and Design
   
@@ -127,10 +127,7 @@ Create file monitoring software that will log file access to configured director
    - Encapsulate the NETLINK routines into a class netlink_class.
    
    - Encapsulate the syslog routines into logger_class.
-   
-   - Currently logging is done to test file /var/log/auditdir.log, in future will include user's own 
-     configured text file.
-   
+         
    - Provision for User being able to configure more rules.
    
   
