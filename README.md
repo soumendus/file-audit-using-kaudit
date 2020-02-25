@@ -91,7 +91,7 @@ Create file monitoring software that will log file access to configured director
    
     $ auditdir
    
-    We can also register our daemon with the systemd and use the systemctl to start and stop and check the status.
+    TBD: Either we do it as above or we can also register our daemon with the systemd and use the systemctl to start and stop and check the status.
    
     Contents of /etc/systemd/system/fmas.service
     [Unit]
@@ -105,6 +105,10 @@ Create file monitoring software that will log file access to configured director
 
     [Install]
     WantedBy=multi-user.target
+    
+    systemctl enable fmas.service
+    
+    systemctl start fmas.service
    
    # HOW TO SEE LOGGED DATA
    
