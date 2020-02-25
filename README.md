@@ -126,7 +126,7 @@ Create file monitoring software that will log file access to configured director
     Type of Access: READ
     Date of Access: Tue Feb 23 09:26:21 EST 2020
     Process ID of the Process which Accessed the file: 12345
-    Process Name of the process which accessed the file: /usr/bin/cat
+    Process Name of the process which accessed the file: /bin/cat
     User ID who accessed the file: 1001
     User name who accessed the file: soumendu
     
