@@ -90,9 +90,6 @@ int main()
 	vector<string> dirs;
 	vector<string> all_files;
 	vector<audit_class> a_objs;
-	struct audit_reply *rep;
-	int rc = 0;
-	int val = 0;
 	f_audit_handler f_ah = audit_handler;
 
 	fin.open("/etc/auditdir.conf", ios::in);
@@ -112,7 +109,6 @@ int main()
 	//TODO: Invoke Parser class for Parsing the Message string
 	get_dir(fin, dirs);
 
-#if 0
 	//TODO: Comprehensive Exception Handling
 	try {
 		// Create an object of the Daemon class.
@@ -130,7 +126,6 @@ int main()
 		syslog (LOG_ERR, "%s", e.what());
 		return EXIT_FAILURE;
     	}
-#endif
 
 	fd = audit_open();
 
@@ -144,7 +139,6 @@ int main()
 	// Declare a list of rule pointers
 	struct audit_rule_data *rule[dirs.size()]; 
 
-	val = AUDIT_PERM_READ | AUDIT_PERM_WRITE | AUDIT_PERM_EXEC | AUDIT_PERM_ATTR;
 	// Add the Directory for Monitoring
 	for(int i = 0; i < dirs.size(); i++) {
 		rule[i] = new audit_rule_data();
@@ -154,11 +148,6 @@ int main()
 
 		// Add the desired rule
 		audit_add_rule_data(fd, rule[i], AUDIT_FILTER_EXIT, AUDIT_ALWAYS);
-#if 0
-		if (audit_update_watch_perms(rule[i], val) != 0) {
-                	return EXIT_FAILURE;
-        	}
-#endif
 	}
 
     	audit_set_pid(fd, getpid(), WAIT_YES);
@@ -194,12 +183,6 @@ int main()
 
 	// Close the Auditing system
 	audit_close(fd);
-
-#if 0
-	string mterm("File Auditing and Monitoring Daemon Terminated");
-
-	dobj.print_message(mterm);
-#endif
 
 	closelog();
 
