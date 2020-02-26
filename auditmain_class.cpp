@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
- * auditdir.cpp: File Monitoring and Auditing System main source file
+ * auditmain_class.cpp: File Monitoring and Auditing System main source file
  *
  * Written by Soumendu Sekhar Satapathy, 23rd Feb 2020
  * satapathy.soumendu@gmail.com
