@@ -59,6 +59,31 @@ Create file monitoring software that will log file access to configured director
   
   5)  I think we can write our own custom kauditd like daemon in the Linux Kernel and add a user space component like FMAS to leverage the custom daemon. Basically we don't want to be at the mercy of the existing kaudit kernel component and we can write out own custom lightweight daemon.
   
+  # PREREQUISITE
+  
+     - The Linux Kerne should have the kauditd kernel daemon running. 
+    
+    $ ps -aef|grep kauditd
+    
+    root        84     2  0 Feb26 ?        00:00:00 [kauditd]
+    
+    To verify do the following.
+    
+    grep CONFIG_AUDIT /boot/config-`uname -r`
+    
+    CONFIG_AUDIT=y
+    CONFIG_AUDITSYSCALL=y
+    CONFIG_AUDIT_ARCH=y
+
+    If you don't see the above config set, then you need to set it in the .config and build your kernel.
+    
+    - libaudit library should be present in the system.
+    
+    - Before you run the FMAS daemon, ensure that you turn off any other audit daemon that is running as follows
+    
+       $ service audit stop
+       
+  
   # HOW TO INSTALL THE FMAS SOFTWARE
   
   https://github.com/soumendus/file-audit-using-kaudit/blob/master/FAMS-1-1.x86_64.rpm
