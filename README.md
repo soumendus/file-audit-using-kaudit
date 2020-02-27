@@ -61,7 +61,7 @@ Create file monitoring software that will log file access to configured director
   
   # PREREQUISITE
   
-     - The Linux Kerne should have the kauditd kernel daemon running. 
+     - The Linux Kernel should have the kauditd kernel daemon running. 
     
     $ ps -aef|grep kauditd
     
