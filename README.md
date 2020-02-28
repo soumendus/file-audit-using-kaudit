@@ -81,7 +81,7 @@ Create file monitoring software that will log file access to configured director
     
     - Before you run the FMAS daemon, ensure that you turn off any other audit daemon that is running as follows
     
-       $ service audit stop
+       $ service auditd stop
        
   
   # HOW TO INSTALL THE FMAS SOFTWARE
