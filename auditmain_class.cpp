@@ -73,8 +73,10 @@ void audit_handler(struct ev_loop *loop, struct ev_io *io, int revents)
                  reply.message, 
 		 asctime(localtime(&timetoday)));
 	
+	//Convert char* to string object
 	string mstr = convert_to_string_obj(buf,strlen(buf));
 
+	// Wtite string to the file (/var/log/auditdir.log)
 	fout << mstr;
 
 	//TODO: Invoke Parser class for Parsing the Message string
