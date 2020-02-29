@@ -92,8 +92,8 @@ Create file monitoring software that will log file access to configured director
   
    # HOW TO CONFIGURE THE FMAS SOFTWARE
    
-   Add all your Directories that you want to monitor in the file /etc/auditdir.conf. No trailing space or empty lines in between.
-   My parser development is TBD which will take care of this trailing and leading spaces and empty lines in between the paths.
+   Add all your Directories that you want to monitor in the file /etc/auditdir.conf. No trailing space or empty lines in between. The application has a parser in place to parse the file.
+ 
    
    Example: The following shows three directories added
    
@@ -110,24 +110,25 @@ Create file monitoring software that will log file access to configured director
    
     $ auditdir
    
-    TBD: Either we do it as above or we can also register our daemon with the systemd and use the systemctl to start and stop and check the status.
-   
-    Contents of /etc/systemd/system/fmas.service
-    [Unit]
-    Description=FMAS: File Monitoring and Auditing System
-    After=<>
-
-    [Service]
-    Type=simple
-    Restart=always
-    ExecStart=/usr/bin/auditdir
-
-    [Install]
-    WantedBy=multi-user.target
+    Either we do it as above or as below.
+          
+    $ service fmas start
     
-    systemctl enable fmas.service
+    $ service fmas status
     
-    systemctl start fmas.service
+    
+    fmas.service - File Monitoring and Auditing Service
+    Loaded: loaded (/lib/systemd/system/fmas.service; enabled; vendor preset: enabled)
+    Active: active (running) since Sat 2020-02-29 16:44:32 EST; 2s ago
+    Process: 5673 ExecStart=/usr/bin/auditdir (code=exited, status=0/SUCCESS)
+    Main PID: 5309 (code=exited, status=0/SUCCESS)
+    Tasks: 1 (limit: 4915)
+    CGroup: /system.slice/fmas.service
+           └─5675 /usr/bin/auditdir
+
+    Feb 29 16:44:32 soumendus-Inspiron-3670 systemd[1]: Starting File Monitoring and Auditing Service...
+    Feb 29 16:44:32 soumendus-Inspiron-3670 systemd[1]: Started File Monitoring and Auditing Service.
+
    
    # HOW TO SEE LOGGED DATA
    
