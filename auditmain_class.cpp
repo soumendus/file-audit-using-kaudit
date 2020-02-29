@@ -8,18 +8,22 @@
  *
  */
 
-#define MONITOR_INTERVAL 1
-
 #include "system_headers.h"
 #include "audit_class.h"
 #include "logger_class.h"
 #include "daemon_class.h"
 #include "event_class.h"
+#include "exception_class.h"
+#include "netlink_class.h"
 
 
-/* Global vars */
-static int fd = -1;
+// Initialize the instance variable of the Singleton netlink_link class 
+netlink_class *netlink_class::instance = 0;
 
+// Create a object of netlink_class Class.
+netlink_class *pnet_obj = pnet_obj->get_instance();
+ 
+// Create a object to write to the /var/log/auditdir.log TEXT file
 ofstream fout;
 
 // Audit function handler declaration 
@@ -31,9 +35,17 @@ void get_dir(ifstream& f, vector<string>& dirs)
 {
 	string next;
 
-	//TODO: Invoke Parser class for Parsing and validation
-
 	while(getline(f,next)){
+		if(next == "")
+			throw exception_class("Remove Invalid new Line in conf file");
+		if(next[0] != '/')
+			throw exception_class("Remove Invalid directory name in conf file");
+
+		int spaces = std::count_if(next.begin(), next.end(),
+                           [](unsigned char c){ return std::isspace(c); });
+		if(spaces)
+			throw exception_class("Remove Invalid space in directory name in conf file");
+
 		dirs.push_back(next);
 	}
 }
@@ -57,7 +69,7 @@ void audit_handler(struct ev_loop *loop, struct ev_io *io, int revents)
     time_t timetoday;
     string print_str;
 
-    audit_get_reply(fd, &reply, GET_REPLY_NONBLOCKING, 0);
+    audit_get_reply(pnet_obj->get_fd(), &reply, GET_REPLY_NONBLOCKING, 0);
 
     if (reply.type == AUDIT_SYSCALL ||
         reply.type == AUDIT_PATH || reply.type == AUDIT_CWD)
@@ -76,7 +88,7 @@ void audit_handler(struct ev_loop *loop, struct ev_io *io, int revents)
 	//Convert char* to string object
 	string mstr = convert_to_string_obj(buf,strlen(buf));
 
-	// Wtite string to the file (/var/log/auditdir.log)
+	// Write string to the file (/var/log/auditdir.log)
 	fout << mstr;
 
 	//TODO: Invoke Parser class for Parsing the Message string
@@ -86,32 +98,12 @@ void audit_handler(struct ev_loop *loop, struct ev_io *io, int revents)
     }
 }
 
-int main()
+main()
 {
 	ifstream fin;
 	vector<string> dirs;
-	vector<string> all_files;
-	vector<audit_class> a_objs;
 	f_audit_handler f_ah = audit_handler;
 
-	fin.open("/etc/auditdir.conf", ios::in);
-
-	if(!fin){
-		cout<<"Unable to read the auditdir.conf file"<<endl;
-		return EXIT_FAILURE;
-	}
-
-    	fout.open("/var/log/auditdir.log", ios::out | ios::app);
-
-     	if(!fout) {
-		cout<<"Unable to open file for logging file audit data"<<endl;
-		return EXIT_FAILURE;
-	}
-
-	//TODO: Invoke Parser class for Parsing the Message string
-	get_dir(fin, dirs);
-
-	//TODO: Comprehensive Exception Handling
 	try {
 		// Create an object of the Daemon class.
 		daemon_class dobj;
@@ -119,46 +111,23 @@ int main()
 		// Create Daemon
 		dobj.create_daemon();
 
-		string msg("File Auding and Monitoring Daemon Started.");
-
 		// Print Message
-		dobj.print_message(msg);
-	}
-	catch(std::exception& e) {
-		syslog (LOG_ERR, "%s", e.what());
-		return EXIT_FAILURE;
-    	}
+		string msg("File Auditing and Monitoring Daemon Started.");
 
-	fd = audit_open();
+		fin.open("/etc/auditdir.conf", ios::in);
+    		fout.open("/var/log/auditdir.log", ios::out | ios::app);
 
-	if(fd < 0){
-		return EXIT_FAILURE;
-	}
+		// Get all the directories configured in /etc/auditdir.conf to Monitor
+		get_dir(fin, dirs);
 
-	// Enable the Auditing
-	audit_set_enabled(fd, 1);
+		// Open Link
+		pnet_obj->open_link();
 
-	// Declare a list of rule pointers
-	struct audit_rule_data *rule[dirs.size()]; 
-
-	// Add the Directory for Monitoring
-	for(int i = 0; i < dirs.size(); i++) {
-		rule[i] = new audit_rule_data();
-		if(audit_add_watch_dir(AUDIT_DIR, &rule[i], dirs[i].c_str()) < 0) {
-			syslog (LOG_ERR, "%s", dirs[i].c_str());
-		}
-
-		// Add the desired rule
-		audit_add_rule_data(fd, rule[i], AUDIT_FILTER_EXIT, AUDIT_ALWAYS);
-	}
-
-    	audit_set_pid(fd, getpid(), WAIT_YES);
-
-	//TODO: Comprehensive Exception Handling
-	try {
+		// Add Directory for monitoring.
+		pnet_obj->add_directory_for_mon(dirs);
 
 		// Create an object of the Event class
-		event_class ev_obj(fd,f_ah);
+		event_class ev_obj(pnet_obj->get_fd(),f_ah);
 
 		// Initialize event
 		ev_obj.event_init();
@@ -168,25 +137,22 @@ int main()
 
 		// Wait for Events
 		ev_obj.event_loop();
+
 	}
-	catch(std::exception& e) {
-		syslog (LOG_ERR, "%s", e.what());
-		return EXIT_FAILURE;
-    	}
-
-	// Remove all the rules.
-	for(int i = 0; i < dirs.size(); i++) {
-		audit_delete_rule_data(fd, rule[i], AUDIT_FILTER_EXIT, AUDIT_ALWAYS);
-	}
-
-	for(int i = 0; i < dirs.size(); i++) {
-		delete rule[i];
-	}
-
-	// Close the Auditing system
-	audit_close(fd);
-
-	closelog();
-
-	return EXIT_SUCCESS;
+	catch (std::ifstream::failure& e) {
+		string msg(e.what());
+		syslog (LOG_ERR, "%s", "Exception opening /etc/auditdir.conf");
+  	}
+	catch (std::ofstream::failure& e) {
+		string msg(e.what());
+		syslog (LOG_ERR, "%s", msg.c_str());
+  	}
+	catch (exception_class& e) {
+		string msg(e.what());
+		syslog (LOG_ERR, "%s", msg.c_str());
+  	}
+	catch (...) {
+		string msg("Exception");
+		syslog (LOG_ERR, "%s", msg.c_str());
+  	}
 }
