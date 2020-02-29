@@ -8,6 +8,7 @@
 #include <string.h>
 #include <fstream>
 #include <thread>
+#include <algorithm>
 
 #include <map>
 #include <vector>
