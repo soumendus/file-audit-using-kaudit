@@ -61,6 +61,9 @@ Create file monitoring software that will log file access to configured director
     Exception Class
   
     https://github.com/soumendus/file-audit-using-kaudit/blob/master/exception_class.h
+    
+    https://github.com/soumendus/file-audit-using-kaudit/blob/master/exception_class.cpp
+    
   
   
   2) I have also developed this using a naive approach where my software recursively keeps checking the directory for access to files. The frequency of scanning the directory can be configured. This method even though works cannot be considered as a great method.
