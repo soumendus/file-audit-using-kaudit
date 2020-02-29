@@ -103,13 +103,7 @@ Create file monitoring software that will log file access to configured director
    
    /etc
    
-    TBD: Planning to change the CONF file(/etc/auditdir.conf) as follows so that the user can specify the Directories and also the LOG file in the same CONF file and this
-     will be backed up by a written parser which will properly parse this file before extracting the directories and the LOG file.
    
-    TBD: Contents of the /etc/auditdir.conf file
-    AUDITDIR_DIRS=/etc /root/coding /tmp
-
-    AUDITDIR_LOGFILE=/var/log/mylog.txt
 
    
    # HOW TO RUN THE FMAS DAEMON
@@ -182,20 +176,6 @@ Create file monitoring software that will log file access to configured director
    
    - To convert numerical User ID to human readable format.
    
-   - To do a bit of parsing for reading data from /etc/auditdir.conf file.
    
-   - More Testing and validation by writing a Test Driver
-   
-   - More comprehensive Exception Handling
-   
-   - Bit of code re-factoring
-   
-   - Add a bit more Documentation in the code.
-   
-   - Encapsulate the NETLINK routines into a class netlink_class.
-   
-   - Encapsulate the syslog routines into logger_class.
-         
-   - Provision for User being able to configure more rules.
    
   
