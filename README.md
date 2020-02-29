@@ -42,7 +42,13 @@ Create file monitoring software that will log file access to configured director
     https://github.com/soumendus/file-audit-using-kaudit/blob/master/event_class.h
   
     https://github.com/soumendus/file-audit-using-kaudit/blob/master/event_class.cpp
+    
+    
+    Netlink Class
   
+    https://github.com/soumendus/file-audit-using-kaudit/blob/master/netlink_class.h
+    
+    
     Daemon Class
   
     https://github.com/soumendus/file-audit-using-kaudit/blob/master/daemon_class.h
