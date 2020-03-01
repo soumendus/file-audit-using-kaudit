@@ -98,6 +98,24 @@ Create file monitoring software that will log file access to configured director
     
        $ service auditd stop
        
+       Booting with "audit=1" on the kernel command-line will make sure auditing is enabled on all auditible processes.
+
+    Set audit=1 in the Kernel Boot parameters.  :
+
+    Open the file /etc/default/grub
+    
+    Append "audit=1" to the space-separated list of options specified in the GRUB_CMDLINE_LINUX_DEFAULT variable.
+    
+    Save the file
+    
+    Update the GRUB2 boot loader configuration in /boot/grub2/grub.cfg by executing
+
+    # grub2-mkconfig -o /boot/grub2/grub.cfg
+
+    Reboot the system
+    
+    Verify that the setting is present in the /proc/cmdline file
+       
   
   # HOW TO INSTALL THE FMAS SOFTWARE
   
