@@ -118,6 +118,8 @@ Create file monitoring software that will log file access to configured director
    
    /etc
    
+    TBD: To provide the user with an option to set their own text file for logging.  
+   
    
 
    
