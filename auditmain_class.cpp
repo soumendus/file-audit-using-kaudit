@@ -53,48 +53,50 @@ void get_dir(ifstream& f, vector<string>& dirs)
 // Convert char* to C++ string obj.
 string convert_to_string_obj(char* a, int size)
 {
-    int i;
-    string s = "";
-    for (i = 0; i < size; i++) {
-        s = s + a[i];
-    }
-    return s;
+	int i;
+	string s = "";
+
+	for (i = 0; i < size; i++) {
+		s = s + a[i];
+	}
+
+	return s;
 }
 
 // This is the audit handler which handles events sent from Kernel
 void audit_handler(struct ev_loop *loop, struct ev_io *io, int revents)
 {
-    struct audit_reply reply;
+	struct audit_reply reply;
 
-    time_t timetoday;
-    string print_str;
+	time_t timetoday;
+	string print_str;
 
-    audit_get_reply(pnet_obj->get_fd(), &reply, GET_REPLY_NONBLOCKING, 0);
+	audit_get_reply(pnet_obj->get_fd(), &reply, GET_REPLY_NONBLOCKING, 0);
 
-    if (reply.type == AUDIT_SYSCALL ||
-        reply.type == AUDIT_PATH || reply.type == AUDIT_CWD)
-    {
-        char *buf = new char[MAX_AUDIT_MESSAGE_LENGTH];
-        time(&timetoday);
+	if (reply.type == AUDIT_SYSCALL ||
+		reply.type == AUDIT_PATH || reply.type == AUDIT_CWD)
+	{
+		char *buf = new char[MAX_AUDIT_MESSAGE_LENGTH];
+		time(&timetoday);
 
-        snprintf(buf,
-                 MAX_AUDIT_MESSAGE_LENGTH,
-                 "FMAS::Type=%s Message=%.*s Date=%s",
-                 audit_msg_type_to_name(reply.type),
-                 reply.len,
-                 reply.message, 
-		 asctime(localtime(&timetoday)));
+		snprintf(buf,
+			MAX_AUDIT_MESSAGE_LENGTH,
+			"FMAS::Type=%s Message=%.*s Date=%s",
+			audit_msg_type_to_name(reply.type),
+			reply.len,
+			reply.message, 
+			asctime(localtime(&timetoday)));
 	
-	//Convert char* to string object
-	string mstr = convert_to_string_obj(buf,strlen(buf));
+		//Convert char* to string object
+		string mstr = convert_to_string_obj(buf,strlen(buf));
 
-	// Write string to the file (/var/log/auditdir.log)
-	fout << mstr;
+		// Write string to the file (/var/log/auditdir.log)
+		fout << mstr;
 
-	// Also Log to syslog
-	syslog (LOG_NOTICE, "%s", buf);
+		// Also Log to syslog
+		syslog (LOG_NOTICE, "%s", buf);
 
-    }
+	}
 }
 
 int main()
