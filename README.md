@@ -33,7 +33,7 @@ Create file monitoring software that will log file access to configured director
   
     Associated Code
   
-    Main Class
+    auditmain Source File
   
     https://github.com/soumendus/file-audit-using-kaudit/blob/master/auditmain_class.cpp
   
@@ -76,7 +76,7 @@ Create file monitoring software that will log file access to configured director
   
   # PREREQUISITE
   
-     - The Linux Kernel should have the kauditd kernel daemon running. 
+    (1) The Linux Kernel should have the kauditd kernel daemon running. 
     
     $ ps -aef|grep kauditd
     
@@ -92,11 +92,29 @@ Create file monitoring software that will log file access to configured director
 
     If you don't see the above config set, then you need to set it in the .config and build your kernel.
     
-    - libaudit library should be present in the system.
+    (2) libaudit library should be present in the system.
     
-    - Before you run the FMAS daemon, ensure that you turn off any other audit daemon that is running as follows
+    (3) Before you run the FMAS daemon, ensure that you turn off any other audit daemon that is running as follows
     
        $ service auditd stop
+       
+    (4)  Booting with "audit=1" on the kernel command-line will make sure auditing is enabled on all auditible processes.
+
+    Set audit=1 in the Kernel Boot parameters.  :
+
+    Open the file /etc/default/grub
+    
+    Append "audit=1" to the space-separated list of options specified in the GRUB_CMDLINE_LINUX_DEFAULT variable.
+    
+    Save the file
+    
+    Update the GRUB2 boot loader configuration in /boot/grub2/grub.cfg by executing
+
+    # grub2-mkconfig -o /boot/grub2/grub.cfg
+
+    Reboot the system
+    
+    Verify that the setting is present in the /proc/cmdline file
        
   
   # HOW TO INSTALL THE FMAS SOFTWARE
@@ -107,16 +125,18 @@ Create file monitoring software that will log file access to configured director
   
    # HOW TO CONFIGURE THE FMAS SOFTWARE
    
-   Add all your Directories that you want to monitor in the file /etc/auditdir.conf. No trailing space or empty lines in between. The application has a parser in place to parse the file.
+    Add all your Directories that you want to monitor in the file /etc/auditdir.conf. No trailing space or empty lines in between. The application has a parser in place to parse the file.
  
    
-   Example: The following shows three directories added
+    Example: The following shows three directories added
    
-   /root/coding
+    /root/coding
    
-   /home/scala
+    /home/scala
    
-   /etc
+    /etc
+   
+    TBD: To provide the user with an option to set their own text file for logging.  
    
    
 
