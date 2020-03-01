@@ -195,14 +195,14 @@ Create file monitoring software that will log file access to configured director
     TBD: Format the above output and log as below, for a non-unix user. A BASH script can be written to do that
     or a few lines of C++ code can be added to the FMAS application to format the above output as follows.
     
-    Name of the Directory Accessed: - /etc
-    Name of the file Accessed in the Directory: /etc/passwd
-    Type of Access: READ
-    Date of Access: Tue Feb 23 09:26:21 EST 2020
-    Process ID of the Process which Accessed the file: 12345
-    Process Name of the process which accessed the file: /bin/cat
-    User ID who accessed the file: 1001
-    User name who accessed the file: soumendu
+    Name of the Directory Accessed: - /tmp
+    Name of the file Accessed in the Directory: FMAS.txt
+    Type of Access: DELETE the File FMAS.txt
+    Date of Access: Mon Feb 24 09:40:04 2020
+    Process ID of the Process which Accessed the file: 8688
+    Process Name of the process which accessed the file: /bin/rm
+    User ID who accessed the file: 0 
+    User name who accessed the file: root ( 0 User ID is root as per /etc/passwd )
     
     
 
