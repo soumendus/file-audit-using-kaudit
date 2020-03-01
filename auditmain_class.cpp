@@ -91,8 +91,7 @@ void audit_handler(struct ev_loop *loop, struct ev_io *io, int revents)
 	// Write string to the file (/var/log/auditdir.log)
 	fout << mstr;
 
-	//TODO: Invoke Parser class for Parsing the Message string
-	//TODO: Invoke Logger class for loggin into a file.
+	// Also Log to syslog
 	syslog (LOG_NOTICE, "%s", buf);
 
     }
