@@ -130,11 +130,10 @@ Create file monitoring software that will log file access to configured director
    
     Example: The following shows three directories added
    
-    /root/coding
-   
-    /home/scala
-   
+    /tmp
+    /home/soumendu
     /etc
+    /root
    
     TBD: To provide the user with an option to set their own text file for logging.  
    
