@@ -76,7 +76,7 @@ Create file monitoring software that will log file access to configured director
   
   # PREREQUISITE
   
-     - The Linux Kernel should have the kauditd kernel daemon running. 
+    (1) The Linux Kernel should have the kauditd kernel daemon running. 
     
     $ ps -aef|grep kauditd
     
@@ -92,13 +92,13 @@ Create file monitoring software that will log file access to configured director
 
     If you don't see the above config set, then you need to set it in the .config and build your kernel.
     
-    - libaudit library should be present in the system.
+    (2) libaudit library should be present in the system.
     
-    - Before you run the FMAS daemon, ensure that you turn off any other audit daemon that is running as follows
+    (3) Before you run the FMAS daemon, ensure that you turn off any other audit daemon that is running as follows
     
        $ service auditd stop
        
-       Booting with "audit=1" on the kernel command-line will make sure auditing is enabled on all auditible processes.
+    (4)  Booting with "audit=1" on the kernel command-line will make sure auditing is enabled on all auditible processes.
 
     Set audit=1 in the Kernel Boot parameters.  :
 
