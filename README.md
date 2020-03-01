@@ -107,16 +107,16 @@ Create file monitoring software that will log file access to configured director
   
    # HOW TO CONFIGURE THE FMAS SOFTWARE
    
-   Add all your Directories that you want to monitor in the file /etc/auditdir.conf. No trailing space or empty lines in between. The application has a parser in place to parse the file.
+    Add all your Directories that you want to monitor in the file /etc/auditdir.conf. No trailing space or empty lines in between. The application has a parser in place to parse the file.
  
    
-   Example: The following shows three directories added
+    Example: The following shows three directories added
    
-   /root/coding
+    /root/coding
    
-   /home/scala
+    /home/scala
    
-   /etc
+    /etc
    
     TBD: To provide the user with an option to set their own text file for logging.  
    
