@@ -97,7 +97,7 @@ void audit_handler(struct ev_loop *loop, struct ev_io *io, int revents)
     }
 }
 
-main()
+int main()
 {
 	ifstream fin;
 	vector<string> dirs;
@@ -141,17 +141,48 @@ main()
 	catch (std::ifstream::failure& e) {
 		string msg(e.what());
 		syslog (LOG_ERR, "%s", "Exception opening /etc/auditdir.conf");
+
+		return EXIT_FAILURE;
   	}
 	catch (std::ofstream::failure& e) {
 		string msg(e.what());
 		syslog (LOG_ERR, "%s", msg.c_str());
+
+		// Close the CONF file
+		fin.close();
+
+		return EXIT_FAILURE;
   	}
 	catch (exception_class& e) {
 		string msg(e.what());
 		syslog (LOG_ERR, "%s", msg.c_str());
+
+		// Close the CONF file
+		fin.close();
+
+		// Close the LOG file
+		fout.close();
+
+		// Delete all rules and free memory.
+		pnet_obj->delete_all_rules();
+
+		return EXIT_FAILURE;
   	}
 	catch (...) {
 		string msg("Exception");
 		syslog (LOG_ERR, "%s", msg.c_str());
+
+		return EXIT_FAILURE;
   	}
+
+	// Close the CONF file
+	fin.close();
+
+	// Close the LOG file
+	fout.close();
+
+	// Delete all rules and free memory.
+	pnet_obj->delete_all_rules();
+
+	return EXIT_SUCCESS;
 }
