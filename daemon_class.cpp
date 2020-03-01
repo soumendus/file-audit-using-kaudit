@@ -10,6 +10,7 @@
  */
 
 #include "daemon_class.h"
+#include "exception_class.h"
 
 
 daemon_class::daemon_class()
@@ -23,9 +24,8 @@ void daemon_class::create_daemon()
 	/* Fork off the parent process */
 	pid = fork();
 
-	/* An error occurred */
 	if (pid < 0)
-		exit(EXIT_FAILURE);
+		throw exception_class("process id less than zero");
 
 	/* Success: Let the parent terminate */
 	if (pid > 0)
@@ -33,7 +33,7 @@ void daemon_class::create_daemon()
 
 	/* On success: The child process becomes session leader */
 	if (setsid() < 0)
-		exit(EXIT_FAILURE);
+		throw exception_class("setsid less than zero");
 
 	/* Catch, ignore and handle signals */
 	//TODO: Implement a working signal handler */
@@ -43,9 +43,9 @@ void daemon_class::create_daemon()
 	/* Fork off for the second time*/
 	pid = fork();
 
-	/* An error occurred */
 	if (pid < 0)
-		exit(EXIT_FAILURE);
+		throw exception_class("After second time process id less than zero");
+
 	/* Success: Let the parent terminate */
 	if (pid > 0)
 		exit(EXIT_SUCCESS);
