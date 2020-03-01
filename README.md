@@ -33,7 +33,7 @@ Create file monitoring software that will log file access to configured director
   
     Associated Code
   
-    Main Class
+    auditmain Source File
   
     https://github.com/soumendus/file-audit-using-kaudit/blob/master/auditmain_class.cpp
   
