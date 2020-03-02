@@ -22,13 +22,10 @@ class netlink_class
 		vector<struct audit_rule_data*> rule;
    		static netlink_class *instance;
 
+		// Declare the Constructor in the private
 		netlink_class(void);
 
 	public:
-#if 0
-		netlink_class(void);
-#endif
-
 		static netlink_class *get_instance() {
 			if (!instance)
 				instance = new netlink_class;
