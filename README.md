@@ -7,7 +7,7 @@ Soumendu Sekhar Satapathy
 Email: satapathy.soumendu@gmail.com
 
 # PROBLEM
-Create file monitoring software that will log file access to configured directories on the system.
+File monitoring software that will log file access to configured directories on the system.
 
             
 # SOLUTION
