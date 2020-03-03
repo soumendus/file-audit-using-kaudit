@@ -9,18 +9,8 @@ Email: satapathy.soumendu@gmail.com
 # PROBLEM
 Create file monitoring software that will log file access to configured directories on the system.
 
-# Requirements
-    • Software must be easily installed and configured
-    • Software must monitor configured directories for file access 
-        ◦ Auditing must run from OS startup to shutdown
-        ◦ Audit must be written to text file on local system
-        ◦ Text file must contain 
-            ▪ Timestamp
-            ▪ User
-            ▪ Process ID
-            ▪ Access Type
             
-  # Solution
+# SOLUTION
   There can be many ways to solve this problem. I developed in two methods. Here I am also sharing more methods to solve this problem.
   
   1) I have developed this Software (FMAS) using C++ language and this application leverages the Linux Kernel Audit daemon. The FMAS application uses the libaudit library. This FMAS software registers rules with the Linux Kernel for directory monitoring. These directory will be specified by user with full path, in the file /etc/auditdir.conf. Whenever any activity happens within the directory, by some user who logged into the system either remotely or locally, events are sent by the Linux kernel which are caught by the event class of FMAS.
