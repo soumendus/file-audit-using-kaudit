@@ -35,6 +35,7 @@ void get_dir(ifstream& f, vector<string>& dirs)
 {
 	string next;
 
+	// Do some parsing of the /etc/auditdir.conf file.
 	while(getline(f,next)){
 		if(next == "")
 			throw exception_class("Remove Invalid new Line in conf file");
