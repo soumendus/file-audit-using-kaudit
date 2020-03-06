@@ -20,8 +20,6 @@ void netlink_class::open_link()
 {
 
 	this->fd = audit_open();
-	cout<<"Open link"<<endl;
-	cout<<fd<<endl;
 
         if(this->fd < 0){
                 throw exception_class("Failure in audit_open()");
@@ -45,9 +43,7 @@ void netlink_class::add_directory_for_mon(vector<string>& dirs)
                 rule[i] = new audit_rule_data();
                 if(audit_add_watch_dir(AUDIT_DIR, &rule[i], dirs[i].c_str()) < 0) {
 			throw exception_class("audit_add_watch_dir() failed");
-                        syslog (LOG_ERR, "%s", dirs[i].c_str());
                 }
-		cout<<dirs[i]<<endl;
 
                 // Add the desired rule
                 audit_add_rule_data(this->fd, rule[i], AUDIT_FILTER_EXIT, AUDIT_ALWAYS);
